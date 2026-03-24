@@ -1,0 +1,185 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Base ───────────────────────────────────────────────────────────────── */
+* { box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: #0d1117;
+  color: #e2e8f0;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+/* ── Scrollbar ───────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #4285f4; }
+
+/* ── Quill Editor — Google Docs style ────────────────────────────────────── */
+.ql-toolbar.ql-snow {
+  background: #ffffff;
+  border: none !important;
+  border-bottom: 1px solid #e0e0e0 !important;
+  padding: 8px 16px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+.ql-toolbar.ql-snow .ql-formats {
+  margin-right: 12px;
+}
+.ql-toolbar button:hover,
+.ql-toolbar button.ql-active {
+  color: #1a73e8 !important;
+}
+.ql-toolbar button:hover .ql-stroke,
+.ql-toolbar button.ql-active .ql-stroke {
+  stroke: #1a73e8 !important;
+}
+.ql-toolbar button:hover .ql-fill,
+.ql-toolbar button.ql-active .ql-fill {
+  fill: #1a73e8 !important;
+}
+.ql-container.ql-snow {
+  border: none !important;
+  background: #f0f0f0;
+  min-height: calc(100vh - 160px);
+}
+.ql-editor {
+  background: #ffffff;
+  max-width: 816px;
+  min-height: 1056px;
+  margin: 24px auto;
+  padding: 96px !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2), 0 4px 16px rgba(0,0,0,0.1);
+  font-family: Arial, sans-serif !important;
+  font-size: 11pt !important;
+  line-height: 1.6 !important;
+  color: #202124 !important;
+}
+.ql-editor.ql-blank::before {
+  color: #aaa;
+  font-style: normal !important;
+  left: 96px !important;
+}
+.ql-editor p { margin-bottom: 0 !important; }
+.ql-editor h1 { font-size: 24pt !important; font-weight: 700 !important; }
+.ql-editor h2 { font-size: 18pt !important; font-weight: 600 !important; }
+.ql-editor h3 { font-size: 14pt !important; font-weight: 600 !important; }
+
+/* ── Quill cursor styles ─────────────────────────────────────────────────── */
+.ql-cursor-flag { border-radius: 2px 2px 2px 0; padding: 2px 6px; font-size: 11px; font-family: Arial; font-weight: 600; }
+.ql-cursor-caret { width: 2px; }
+
+/* ── Handsontable overrides ──────────────────────────────────────────────── */
+.handsontable td {
+  font-family: Arial, sans-serif !important;
+  font-size: 13px !important;
+  color: #202124 !important;
+}
+.handsontable th {
+  background: #f8f9fa !important;
+  color: #444 !important;
+  font-weight: 600 !important;
+  font-family: Arial, sans-serif !important;
+  font-size: 12px !important;
+}
+.handsontable .wtBorder.current { background: #1a73e8 !important; }
+.handsontable .area { background: #e8f0fe !important; }
+
+/* ── Animations ──────────────────────────────────────────────────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideIn {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(0); }
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+.fade-in    { animation: fadeIn 0.3s ease; }
+.slide-in   { animation: slideIn 0.3s ease; }
+.pulse-dot  { animation: pulse-dot 1.5s ease infinite; }
+
+/* ── OTP boxes ───────────────────────────────────────────────────────────── */
+.otp-box {
+  width: 52px;
+  height: 64px;
+  border: 2px solid #4285f4;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 800;
+  color: #4285f4;
+  background: #e8f0fe;
+}
+
+/* ── File drag zone ──────────────────────────────────────────────────────── */
+.drop-zone {
+  border: 2px dashed #334155;
+  border-radius: 12px;
+  transition: all 0.2s;
+}
+.drop-zone:hover,
+.drop-zone.active {
+  border-color: #4285f4;
+  background: rgba(66,133,244,0.05);
+}
+
+/* ── Slide canvas ────────────────────────────────────────────────────────── */
+.slide-canvas {
+  background: #ffffff;
+  border: 1px solid #dadce0;
+  border-radius: 2px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  aspect-ratio: 16/9;
+  display: flex;
+  flex-direction: column;
+  padding: 40px 56px;
+  gap: 16px;
+  min-height: 340px;
+}
+.slide-title-input {
+  border: none;
+  outline: none;
+  font-size: 28px;
+  font-weight: 500;
+  color: #202124;
+  font-family: Arial, sans-serif;
+  background: transparent;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.2s;
+  width: 100%;
+  padding: 4px 0;
+}
+.slide-title-input:focus { border-bottom-color: #1a73e8; }
+.slide-title-input::placeholder { color: #bbb; }
+.slide-body-input {
+  border: none;
+  outline: none;
+  border: 1px dashed transparent;
+  font-size: 16px;
+  color: #444;
+  font-family: Arial, sans-serif;
+  background: transparent;
+  resize: none;
+  flex: 1;
+  padding: 4px;
+  line-height: 1.6;
+  transition: border-color 0.2s;
+  width: 100%;
+}
+.slide-body-input:focus { border-color: #1a73e8; }
+.slide-body-input::placeholder { color: #bbb; }
