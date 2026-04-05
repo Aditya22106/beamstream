@@ -4,14 +4,15 @@ from config import MONGO_URI, MONGO_DB_NAME
 client = motor.motor_asyncio.AsyncIOMotorClient(MONGO_URI)
 db     = client[MONGO_DB_NAME]
 
-users          = db["users"]
-files          = db["files"]
-sessions       = db["sessions"]
-documents      = db["documents"]
-notifications  = db["notifications"]
-activity_logs  = db["activity_logs"]
-chat_messages  = db["chat_messages"]
+users           = db["users"]
+files           = db["files"]
+sessions        = db["sessions"]
+documents       = db["documents"]
+notifications   = db["notifications"]
+activity_logs   = db["activity_logs"]
+chat_messages   = db["chat_messages"]
 webrtc_sessions = db["webrtc_sessions"]
+voice_rooms     = db["voice_rooms"]
 
 
 async def create_indexes():
@@ -24,7 +25,9 @@ async def create_indexes():
     await activity_logs.create_index("timestamp")
     await chat_messages.create_index("session_id")
     await chat_messages.create_index("timestamp")
-    # WebRTC sessions auto-expire after 10 minutes
     await webrtc_sessions.create_index("expires_at", expireAfterSeconds=0)
     await webrtc_sessions.create_index("pin")
+    await voice_rooms.create_index("session_id", unique=True)
+    # Voice signals auto-expire after 2 minutes
+    await db["voice_signals"].create_index("expires_at", expireAfterSeconds=0)
     print("[DB] Indexes created")

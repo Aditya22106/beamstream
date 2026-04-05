@@ -2,7 +2,7 @@ import socketio
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from routes import auth, files, sessions, documents, notifications, admin, webrtc
+from routes import auth, files, sessions, documents, notifications, admin, webrtc, voice
 from socket_manager import sio
 from database import create_indexes
 
@@ -27,6 +27,7 @@ app.include_router(documents.router,     prefix="/api/documents",     tags=["Doc
 app.include_router(notifications.router, prefix="/api/notifications", tags=["Notifications"])
 app.include_router(admin.router,         prefix="/api/admin",         tags=["Admin"])
 app.include_router(webrtc.router,        prefix="/api/webrtc",        tags=["WebRTC"])
+app.include_router(voice.router,         prefix="/api/voice",         tags=["Voice"])
 
 
 @app.on_event("startup")
@@ -37,11 +38,7 @@ async def startup():
 
 @app.get("/")
 async def root():
-    return {
-        "message": "BeamStream API v2.0",
-        "status":  "running",
-        "docs":    "/docs",
-    }
+    return {"message": "BeamStream API v2.0", "status": "running", "docs": "/docs"}
 
 
 @app.get("/health")
